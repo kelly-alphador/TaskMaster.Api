@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskMaster.Api.Extension;
 using TaskMaster.Domaine.Core.Interface;
 using TaskMaster.Infrastructure.Core.Context;
 using TaskMaster.Infrastructure.Core.repository;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.ConfigureCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,9 +30,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
